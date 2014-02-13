@@ -104,9 +104,10 @@
 - (void) didCreateRepo:(NSDictionary *)JSONDict
 {
     NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"Repo" inManagedObjectContext:self.managedObjectContext];
-    Repo * repo = [[Repo alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext withJSONDict:JSONDict];
-    [self.fetchedRestultsController performFetch:nil];
-    [self.tableView reloadData];
+    if ([[Repo alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext withJSONDict:JSONDict] ) {
+        [self.fetchedRestultsController performFetch:nil];
+        [self.tableView reloadData];
+    }
 }
 
 - (void) showAlertWithMessage: (NSString *) message
@@ -199,7 +200,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Repo * repo = [self.fetchedRestultsController objectAtIndexPath:indexPath];
-    self.detailViewController.detailItem = repo;
+    [self.sharedNetworkController getTreeForRepo:repo];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self performSegueWithIdentifier:@"showDetail" sender:self];
     }

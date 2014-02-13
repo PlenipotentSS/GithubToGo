@@ -13,6 +13,7 @@
 
 @dynamic html_url;
 @dynamic name;
+@dynamic owner;
 
 - (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context withJSONDict:(NSDictionary*)jsonDict
 {
@@ -28,6 +29,7 @@
 {
     self.name = [json objectForKey:@"name"];
     self.html_url  = [json objectForKey:@"html_url"];
+    self.owner = [[json objectForKey:@"owner"] objectForKey:@"login"];
     
     [self.managedObjectContext save:nil];
 }

@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * html_url;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * owner;
 
 - (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context withJSONDict:(NSDictionary*)jsonDict;
 

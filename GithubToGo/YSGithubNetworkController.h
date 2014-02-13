@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Repo.h"
 
 @protocol YSGitHubControllerDelegate <NSObject>
 
+@optional
 - (void) didAuthenticate;
 - (void) didCreateRepo: (NSDictionary *) JSONDict;
-
+-(void) didGetContents: (NSMutableArray *) JSONDict;
 @end
 
 
@@ -30,7 +32,7 @@
 
 - (void) beginOAuthAccess;
 - (void) handleCallbackUrl: (NSURL *) url;
-
+- (void) getTreeForRepo: (Repo *) repo;
 
 
 @property (unsafe_unretained) id <YSGitHubControllerDelegate> delegate;

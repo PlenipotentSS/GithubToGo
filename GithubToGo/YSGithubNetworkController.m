@@ -151,6 +151,20 @@
     [self.delegate didCreateRepo:[NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:nil]];
 }
 
+-(void) getTreeForRepo:(Repo *)repo
+{
+    NSString * stringURL = [NSString stringWithFormat:@"%@repos/%@/%@/contents",GITHUB_BASE_URL, repo.owner, repo.name];
+    NSLog(@"%@", stringURL);
+    NSURL * url = [NSURL URLWithString:stringURL];
+    NSData * responseData = [NSData dataWithContentsOfURL:url];
+    
+    NSError *error;
+    NSMutableArray * filesTree = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&error];
+    NSLog(@"%@",filesTree);
+    [self.delegate didGetContents:filesTree];
+
+}
+
 - (NSArray *) fetchUserRepos
 {
     NSString * stringURL = [NSString stringWithFormat:@"https://api.github.com/user/repos?access_token=%@", self.oAuthToken];
